@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: platform
+resources:
+- ../../base
+configMapGenerator:
+- name: platform-config
+  behavior: merge
+  literals:
+  - ENVIRONMENT=prod
+  - APP_VERSION=prod
+replicas:
+- name: catalog
+  count: 3
+- name: orders
+  count: 3
+- name: payments
+  count: 3
+- name: users
+  count: 3
+- name: notifications
+  count: 3
+- name: gateway
+  count: 3
+images:
+- name: ghcr.io/example/platform/catalog
+  newTag: prod
+- name: ghcr.io/example/platform/orders
+  newTag: prod
+- name: ghcr.io/example/platform/payments
+  newTag: prod
+- name: ghcr.io/example/platform/users
+  newTag: prod
+- name: ghcr.io/example/platform/notifications
+  newTag: prod
+- name: ghcr.io/example/platform/gateway
+  newTag: prod
